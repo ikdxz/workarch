@@ -1,0 +1,219 @@
+(deflisten active_apps "scripts/dock/active-apps")
+(defpoll trash :interval "2s"  "scripts/dock/trash")
+
+
+(defwidget dock []
+  (box :class "dock"
+       :orientation "h"
+       :hexpand false
+       :vexpand false
+       :height 85  
+
+
+
+      (box :orientation "h" :spacing 10 :halign "center" :valign "center" :hexpand false :vexpand false :space-evenly false
+
+        (eventbox :cursor "hand2" 
+            (button
+            :class "app"
+            :onclick "nautilus &"
+            :valign "center"
+            :tooltip "Finder"
+            :hexpand false
+            :vexpand false
+            :space-evenly false
+              (box :orientation "v" :space-evenly "false"
+                (image :valing "center" :path "/home/kelly/.local/share/icons/WhiteSur/apps/scalable/finder.svg" :image-width 50)
+                (box :halign "center" :width 4 :height 4 :valign "end" :class { active_apps?.["org.gnome.nautilus"] ? "active-app" : "inactive-app"} )
+              )
+            )
+        )
+
+        (eventbox :cursor "hand2" 
+          (button 
+            :class "app"
+            :onclick "nohup rofi -show drun >/dev/null 2>&1 & disown"
+            :valign "center"
+            :tooltip "Launchpad"
+            (box :orientation "v" :space-evenly "false"
+              (image :valing "center" :path "/home/kelly/.local/share/icons/WhiteSur/apps/scalable/launchpadT.svg" :image-width 50)
+              (box :halign "center" :width 4 :height 4 :valign "end" :class { active_apps?.["rofi"] ? "active-app" : "inactive-app"} )
+            )
+          )
+        )
+
+        (eventbox :cursor "hand2" 
+          (button 
+            :class "app"
+            :onclick "brave &"
+            :valign "center"
+            :tooltip "Safari"
+            (box :orientation "v" :space-evenly "false" 
+              (image  :valing "center" :path "/home/kelly/.local/share/icons/WhiteSur/apps/scalable/safari.svg" :image-width 50)
+              (box :halign "center" :width 4 :height 4 :valign "end" :class { active_apps?.["brave-browser"] ? "active-app" : "inactive-app"} )
+            )
+          )
+        )
+
+        (eventbox :cursor "hand2"
+          (button 
+            :class "app"
+            :onclick "onlyoffice-desktopeditors &"
+            :valign "center"
+            :tooltip "Office"
+            (box :orientation "v" :space-evenly "false"
+              (image :valing "center" :path "/home/kelly/.local/share/icons/WhiteSur/apps/scalable/office.svg" :image-width 50)
+              (box :halign "center" :width 4 :height 4 :valign "end" :class { active_apps?.["desktopeditors"] ? "active-app" : "inactive-app"} )
+            )
+          )
+        )
+
+        (eventbox :cursor "hand2"
+          (button 
+            :class "app"
+            :onclick "code &"
+            :valign "center"
+            :tooltip "Visual Studio Code"
+            (box :orientation "v" :space-evenly "false" 
+              (image  :valing "center" :path "/home/kelly/.local/share/icons/WhiteSur/apps/scalable/vscode.svg" :image-width 50)
+              (box :halign "center" :width 4 :height 4 :valign "end" :class { active_apps?.["code"] ? "active-app" : "inactive-app"} )
+            )
+          )
+        )
+
+        (eventbox :cursor "hand2"
+          (button 
+            :class "app"
+            :onclick "/home/kelly/Documents/pruebas/spotify-toggle"
+            :valign "center"
+            :tooltip "Spotify"
+            (box :orientation "v" :space-evenly "false" 
+              (image  :valing "center" :path "/home/kelly/.local/share/icons/WhiteSur/apps/scalable/spotify.svg" :image-width 50)
+              (box :halign "center" :width 4 :height 4 :valign "end" :class { active_apps?.["spotify"] ? "active-app" : "inactive-app"} )
+            )
+          )
+        )
+
+        (eventbox :cursor "hand2"
+          (button 
+            :class "app"
+            :onclick "notion-app &"
+            :valign "center"
+            :tooltip "Notion"
+            (box :orientation "v" :space-evenly "false" 
+              (image  :valing "center" :path "/home/kelly/.local/share/icons/WhiteSur/apps/scalable/notion.svg" :image-width 50)
+              (box :halign "center" :width 4 :height 4 :valign "end" :class { active_apps?.["notion"] ? "active-app" : "inactive-app"} )
+            )
+          )
+        )
+
+        (eventbox :cursor "hand2"
+          (button 
+            :class "app"
+            :onclick "notion-calendar-electron &"
+            :valign "center"
+            :tooltip "Notion Calendar"
+            (box :orientation "v" :space-evenly "false" 
+              (image  :valing "center" :path "/home/kelly/.local/share/icons/WhiteSur/apps/scalable/notion_calendar.svg" :image-width 50)
+              (box :halign "center" :width 4 :height 4 :valign "end" :class { active_apps?.["notion-calendar-electron"] ? "active-app" : "inactive-app"} )
+            )
+          )
+        )
+
+        (eventbox :cursor "hand2"
+          (button 
+            :class "app"
+            :onclick "mysql-workbench &"
+            :valign "center"
+            :tooltip "MySQL Workbench"
+            (box :orientation "v" :space-evenly "false" 
+              (image  :valing "center" :path "/home/kelly/.local/share/icons/WhiteSur/apps/scalable/mysql.svg" :image-width 50)
+              (box :halign "center" :width 4 :height 4 :valign "end" :class { active_apps?.["mysql"] ? "active-app" : "inactive-app"} )
+            )
+          )
+        )
+
+        (eventbox :cursor "hand2"
+          (button 
+            :class "app"
+            :onclick "dbeaver &"
+            :valign "center"
+            :tooltip "Dbeaver"
+            (box :orientation "v" :space-evenly "false" 
+              (image  :valing "center" :path "/home/kelly/.local/share/icons/WhiteSur/apps/scalable/dbeaver.svg" :image-width 50)
+              (box :halign "center" :width 4 :height 4 :valign "end" :class { active_apps?.["dbeaver"] ? "active-app" : "inactive-app"} )
+            )
+          )
+        )
+
+        ;(button 
+        ;  :class "app"
+        ;  :onclick "virtualbox &"
+        ;  :valign "center"
+        ;  :tooltip "VirtualBox"
+        ;  (box :orientation "v" :space-evenly "false" 
+        ;    (image  :valing "center" :path "/home/kelly/.local/share/icons/WhiteSur/apps/scalable/virtualbox.svg" :image-width 50)
+        ;    (box :halign "center" :width 4 :height 4 :valign "end" :class { active_apps?.["virtualbox manager"] ? "active-app" : "inactive-app"} )
+        ;  )
+        ;)
+
+        (eventbox :cursor "hand2"
+          (button 
+            :class "app"
+            :onclick "nautilus '/home/kelly/Google\ Drive/' &"
+            :valign "center"
+            :tooltip "Google Drive"
+            (box :orientation "v" :space-evenly "false" 
+              (image  :valing "center" :path "/home/kelly/.local/share/icons/WhiteSur/apps/scalable/gdrive.svg" :image-width 50)
+              (box :halign "center" :width 4 :height 4 :valign "end" :class { active_apps?.["org.gnome.nautilus"] ? "active-app" : "inactive-app"} )
+            )
+          )
+        )
+
+        (eventbox :cursor "hand2"
+          (button 
+            :class "app"
+            :onclick "discord &"
+            :valign "center"
+            :tooltip "Discord"
+            (box :orientation "v" :space-evenly "false" 
+              (image  :valing "center" :path "/home/kelly/.local/share/icons/WhiteSur/apps/scalable/discord.svg" :image-width 50)
+              (box :halign "center" :width 4 :height 4 :valign "end" :class { active_apps?.["discord"] ? "active-app" : "inactive-app"} )
+            )
+          )
+        )
+
+        (eventbox :cursor "hand2"
+          (button 
+            :class "app"
+            :onclick "kitty /home/$USER &"
+            :valign "center"
+            :tooltip "Terminal"
+            (box :orientation "v" :space-evenly "false" 
+              (image  :valing "center" :path "/home/kelly/.local/share/icons/WhiteSur/apps/scalable/terminal.svg" :image-width 50)
+              (box :halign "center" :width 4 :height 4 :valign "end" :class { active_apps?.["kitty"] ? "active-app" : "inactive-app"} )
+            )
+          )
+        )
+
+        (label :class "sep" :text "|")
+
+        (eventbox :cursor "hand2"
+          (button 
+            :class "app trash"
+            :onclick "nautilus --no-desktop --browser trash:/// &"
+            :valign "center"
+            :tooltip "Trush"
+            (box :orientation "v" :space-evenly "false" 
+              (image  :valing "center" :path trash :image-width 47)
+              (box :halign "center" :width 4 :height 4 :valign "end" :class { active_apps?.["org.gnome.nautilus"] ? "active-app" : "inactive-app"} )
+            )
+          )
+        )
+
+
+    ))
+)
+
+
+

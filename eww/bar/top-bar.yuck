@@ -1,0 +1,17 @@
+;; Components
+  
+  (include "./bar/components/left-bar.yuck")
+  (include "./bar/components/workspaces.yuck")
+  (include "./bar/components/right-bar.yuck")
+
+
+
+(defwidget top-bar []
+    (box :class "top-bar"
+        :orientation "h"
+        :space-evenly true
+    (left-bar)
+    (workspaces)
+    (right-bar)
+  )
+)

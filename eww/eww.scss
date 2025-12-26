@@ -1,0 +1,438 @@
+* {
+  all: unset;
+}
+
+tooltip {
+    background-color: rgba(255, 255, 255, 0.9);
+    font-family: "SF Pro Display";
+    border: rgba(255, 255, 255, 0.2) solid 2;
+    color: rgb(0, 0, 0, 0.9);
+    padding: 20px 25px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 400;
+}
+
+
+
+// ----------------------------------- Widgets ----------------------------------- //
+
+
+
+    // ----------------------------------- Clock ----------------------------------- //
+
+      .clock {
+        font-weight: 700;
+        font-family: "SF Pro Display";
+        font-size: 120px;
+        color: rgba(255, 255, 255, 0.6);
+
+      }
+
+      .clock
+
+      .date {
+        font-weight: 500;
+        font-family: "SF Pro Display";
+        font-size: 25px;
+        color: #ffffff;
+        margin-top: -10px;
+      }
+
+    // ----------------------------------- Clock ----------------------------------- //
+
+
+
+// ---------------------------------------------------------------------------------- //
+
+
+
+
+// ----------------------------------- Top Bar -------------------------------------- //
+
+  .top-bar {
+    background-color: rgba(27, 76, 94, 0.2);
+  }
+
+  // ----------------------------------- Left Bar -------------------------------------- //
+
+      .logo-left-bar{
+        font-size: 22px;
+        font-family: "SF Pro Display";
+        min-width: 50px;
+        margin-left: 5px;
+      }
+
+      .text-left-bar {
+        font-size: 16px;
+        font-weight: 500;
+        font-family: "SF Pro Display";
+        min-width: 65px;
+      }
+
+      .text-left-bar:hover, .logo-left-bar:hover{
+        color: #ffffff;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 5px;
+        transition: 0.2s ease;
+        
+      }
+
+      // ----------------------------------- Menu -------------------------------------- //
+
+        .finder {
+          font-size: 16px;
+          font-weight: 700;
+        }
+
+        .menu-mac {
+          background-color: rgba(255, 255, 255, 0.9);
+          color: rgba(26, 26, 26, 0.8);
+          min-width: 300px;
+          font-family: "SF Pro Display";
+          font-weight: 500;
+          font-size: 16px;
+          padding: 10px 10px;
+          border-radius: 10px;
+        }
+
+        .about, .preferences, .system {
+          border-bottom: 1px solid rgba(26, 26, 26, 0.2);
+          padding: 0 0 10px 0px;
+        }
+
+        .element-menu {
+          padding: 6px 10px;
+
+        }
+
+        .element-menu:hover {
+          background-color: rgba(27, 140, 180, 0.1);
+          border-radius: 5px;
+          transition: background-color 0.2s ease;
+        }
+
+
+        .element-icons {
+          font-size: 16px;
+          font-weight: 600;
+          color: rgba(26, 26, 26, 0.5);
+        }
+
+  // ----------------------------------- Left Bar -------------------------------------- //
+
+
+
+  // ----------------------------------- Workspaces -------------------------------------- //
+
+        .workspaces{
+          font-size: 14px;
+          padding: 5px 20px;
+          border-radius: 20px;
+        } 
+
+        .w1.focused, .w2.focused, .w3.focused, .w4.focused, .w5.focused, .w6.focused, .w7.focused, .w8.focused, .w9.focused {
+          color: #cbf5dc;
+        }
+
+        .w1, .w2, .w3, .w4, .w5, .w6, .w7, .w8, .w9 {
+          color: #7fb092;
+        }
+
+
+        .w1:not(.focused),
+        .w2:not(.focused),
+        .w3:not(.focused),
+        .w4:not(.focused),
+        .w5:not(.focused),
+        .w6:not(.focused),
+        .w7:not(.focused),
+        .w8:not(.focused),
+        .w9:not(.focused) {
+          font-weight: 800;
+        }
+
+        .w1:hover,
+        .w2:hover,
+        .w3:hover,
+        .w4:hover,
+        .w5:hover,
+        .w6:hover,
+        .w7:hover,
+        .w8:hover,
+        .w9:hover{
+          color: grey;
+          transition: 0.2s ease;
+        }
+
+        .w1:not(.focused):hover,
+        .w2:not(.focused):hover,
+        .w3:not(.focused):hover,
+        .w4:not(.focused):hover,
+        .w5:not(.focused):hover,
+        .w6:not(.focused):hover,
+        .w7:not(.focused):hover,
+        .w8:not(.focused):hover,
+        .w9:not(.focused):hover{
+          color: grey; 
+          transition: 0.2s ease;
+        }
+
+  // ----------------------------------- Workspaces -------------------------------------- //
+
+  // ----------------------------------- Right Bar -------------------------------------- //
+
+        .date-right-bar{
+          font-size: 16px;
+          font-family: "SF Pro Display";
+          font-weight: 400;
+          color: #ffffff;
+          margin-right: 20px;
+        }
+
+        .iconos{
+          font-size: 18px;
+          margin-right: 22px;
+        }
+
+        .bluetooth {
+          font-size: 21px;
+          margin-right: 22px;
+        }
+
+        // ----------------------------------- Control Center -------------------------------------- //
+
+
+            .panel {
+              border-radius: 23px;
+            }
+
+            .first {
+              margin: 20px 20px 10px 20px;
+              min-height: 300px;
+            }
+
+            .second {
+              margin: 10px 20px 0px 20px;
+            }
+
+            .third {
+              margin: 0px 20px 10px 20px;
+              min-height: 20px;
+              margin-top: -60px;
+
+            }
+
+            .firstI {
+              margin-right: 10px;
+            }
+
+            .fisrtD {
+              margin-left: 10px;
+            }
+
+            .burbuja {
+              background-color: rgba(99, 135, 146, 0.2);
+              border: rgba(255, 255, 255, 0.2) solid 0.9;
+              //box-shadow: 0 1px 10px; 
+              border-radius: 50px;
+            }
+
+            .musica {
+              min-height: 230px;
+              border-radius: 37px;
+            }
+
+            .musicCovert{
+              margin: 23px 23px 10px 23px;
+              padding: 0px;
+              border-radius: 50px;
+            }
+
+            .musicTitle{
+              color: #ffffff;
+              font-family: "SF Pro Display";
+              min-width: 10px;
+              margin: 0px 20px;
+              font-size: 16px;
+              font-weight: 600;
+            }
+
+            .musicArtist{
+              color: #A0A1BD;
+              font-family: "SF Pro Display";
+              font-size: 15px;
+              margin: 0px 20px;
+              font-weight: 500;
+            }
+
+            .media {
+              margin-top: 15px;
+              margin-bottom: 20px;
+            }
+
+            .cfg {
+              background-color: rgba(99, 135, 146, 0.2);
+              //background-color: #648893;
+              border: rgba(255, 255, 255, 0.2) solid 0.9;
+              border-radius: 37px;
+              padding: 10px 22px 20px 30px;
+              min-height: 80px;
+            }
+
+            .music {
+              //background-color: #648893;
+              background-color: rgba(99, 135, 146, 0.2);
+              box-shadow: 0 3px 6px;
+              min-height: 90px;
+              padding: 10px 15px 20px 15px;
+              border-radius: 23px;
+            }
+
+
+
+            .conex1 {
+              background-color: #648893;
+              border: rgba(255, 255, 255, 0.2) solid 0.9;
+              box-shadow: 0 3px 6px white;
+              border-radius: 23px;
+            }    
+
+            .img{
+              background-color: rgba(146, 179, 172, 0.7);
+              margin: 23px;
+              border-radius: 50px;
+              padding: 10px;
+            }
+
+
+
+            .active{
+              background-color: rgba(255, 255, 255, 1);
+              border: rgba(255, 255, 255, 0.2) solid 0.9;
+              margin: 23px 10px 23px 23px;
+              border-radius: 50px;
+              padding: 10px;
+            }
+
+            .activexl{
+              //background-color: #648893;
+              border: rgba(255, 255, 255, 0.2) solid 0.9;
+              background-color: rgba(99, 135, 146, 0.2);
+              border-radius: 50px;
+              padding: 20px;
+            }
+
+            .inactivexl{
+              //background-color: #648893;
+              border: rgba(255, 255, 255, 0.2) solid 0.9;
+              background-color: rgba(99, 135, 146, 0.2);
+              border-radius: 100px;
+              padding: 25px;
+            }
+            .h1 {
+              font-weight: 700;
+            }
+
+
+            .cfgTitle {
+              color: #ffffff;
+              font-family: "SF Pro Display";
+              font-size: 16px;
+              font-weight: 600;
+            }
+
+            .cfgTxt {
+              color: #dee2eb;
+              font-family: "SF Pro Display";
+              font-size: 16px;
+              font-weight: 500;
+            }
+
+            .title {
+              color: #ffffff;
+              font-family: "SF Pro Display";
+              font-size: 16px;
+              font-weight: 600;
+            }
+
+            .img1{
+              background-color: #B8C8DB;
+              border-radius: 50px;
+              padding: 10px;
+            }
+
+            .musicSource {
+              background-color: rgba(146, 179, 172, 0.7);
+              padding: 15px;
+            }
+
+            .music-scale trough {
+              margin: 0 20px 10px 20px;
+              border-radius: 10px;
+              background-color: #1a1a1a;
+              min-height: 10px;
+              min-width: 1px;
+            }
+
+            .music-scale highlight {
+              background-color: #b1d5e0;
+              border-radius: 10px;
+            }
+
+            .scale trough {
+              margin: 0 0px;
+              background-color: #1a1a1a;
+              border-radius: 30px;
+              min-height: 10px;
+            }
+
+            .scale highlight {
+              background-color: #ffffff;
+              border-radius: 30px;
+            }
+
+        // ----------------------------------- Control Center -------------------------------------- //
+
+  // ----------------------------------- Right Bar -------------------------------------- //
+
+
+// ----------------------------------- Top Bar -------------------------------------- //
+  
+   
+// ----------------------------------- Dock -------------------------------------- //
+
+  .dock{
+    background-color: rgba(62, 144, 165, 0.1);
+    border: rgba(255, 255, 255, 0.2) solid 0.9;
+    border-radius: 26px;
+    padding: 0px 12px;
+  }
+
+  .sep {
+    color: rgba(62, 144, 165, 0.4);
+    font-weight: 400;
+    font-size: 40px;
+    margin: 0 3px;
+  }
+
+  .app {}
+  .app:hover {
+    margin-top: -20px;
+    transition: margin-top 0.2s ease-in-out;
+  }
+
+
+  .active-app {
+    background-color: #ffffff;
+    min-height: 4px;
+    border-radius: 50px;
+    min-width: 4px;
+  }
+
+
+
+// ----------------------------------- Dock -------------------------------------- //
+
+
+

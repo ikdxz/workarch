@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+# Primero comprobamos si hay algún reproductor activo
+status=$(playerctl status 2>/dev/null || echo "No player")
+
+if [ "$status" = "No player" ]; then
+    # Si no hay reproductor, mostramos el play.svg
+    echo "/home/kelly/Downloads/Brave/play.svg"
+    exit 0
+fi
+
+# Si hay reproductor, seguimos mostrando el estado en tiempo real
+playerctl status --follow 2>/dev/null | while read status; do
+    if [ "$status" = "Playing" ]; then
+        echo "/home/kelly/Downloads/Brave/pause.svg"
+    else
+        echo "/home/kelly/Downloads/Brave/play.svg"
+    fi
+done

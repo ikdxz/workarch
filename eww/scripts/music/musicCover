@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+ruta_cover='/tmp'
+ruta_default_cover='/home/kelly/Downloads/Brave/img.svg'
+archivo_url="$ruta_cover/cover.url"
+symlink_cover="$ruta_cover/cover.png"
+
+mkdir -p "$ruta_cover"
+
+artUrl=$(playerctl metadata --format '{{ mpris:artUrl }}' 2>/dev/null || echo "No players found")
+if [ "$artUrl" = "No players found" ]; then
+    echo "$ruta_default_cover"
+    exit 0
+fi
+
+playerctl metadata --format '{{ mpris:artUrl }}' --follow 2>/dev/null |
+while IFS= read -r url; do
+    if [[ ! -f "$archivo_url" ]] || ! grep -q "$url" "$archivo_url" ]; then
+        echo "$url" > "$archivo_url"
+        timestamp=$(date +%s)
+        archivo_cover="$ruta_cover/cover_$timestamp.png"
+
+        curl -sf "$url" -o "$archivo_cover"
+
+        # Actualizar symlink
+        ln -sf "$archivo_cover" "$symlink_cover"
+    fi
+
+    # Emitir ruta del symlink para EWW
+    echo "$symlink_cover"
+done

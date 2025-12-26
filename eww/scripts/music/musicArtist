@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+playerctl metadata --format '{{ artist }}' --follow 2>/dev/null |
+while IFS= read -r line; do
+  echo "$line"
+done

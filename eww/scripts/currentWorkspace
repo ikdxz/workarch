@@ -1,0 +1,5 @@
+#!/bin/env bash
+
+current=$(hyprctl activeworkspace | grep 'id:' | awk '{print $2}')
+next=$((current + 1))
+hyprctl dispatch workspace $next

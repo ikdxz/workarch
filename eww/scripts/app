@@ -1,0 +1,12 @@
+#!/bin/env bash
+
+focused=$(xdotool getwindowfocus getwindowclassname 2>/dev/null)
+
+if [ -n "$focused" ]; then
+    # cortar sufijos después de - o _
+    base="${focused%%[ _-]*}"
+    # Primera letra mayúscula
+    echo "${base^}"
+else
+    echo "Finder"
+fi

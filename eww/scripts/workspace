@@ -1,0 +1,83 @@
+#!/usr/bin/env bash
+set -u
+
+# Define los workspaces (ajusta según tus necesidades)
+workspaces=(1 2 3 4 5 6 7 8 9)
+
+# Función que cuenta las ventanas en un JSON de workspace de forma robusta
+count_windows_in_ws_json() {
+    jq -r 'if has("windows") then (.windows | length)
+           elif has("window_count") then .window_count
+           elif has("clients") then (.clients | length)
+           else 0 end' 2>/dev/null || echo 0
+}
+
+update_workspaces() {
+    # Obtenemos la info de workspaces en JSON (si falla, usamos lista vacía)
+    ws_info="$(hyprctl workspaces -j 2>/dev/null || echo '[]')"
+
+    # Intentamos obtener el workspace enfocado desde workspaces -j
+    focused_ws="$(echo "$ws_info" | jq -r 'map(select(.focused == true or .active == true or .visible == true)) | .[0].id // empty' 2>/dev/null || echo "")"
+
+    # Si no lo conseguimos, intentamos con activewindow (por si no hay ventana activa)
+    if [ -z "$focused_ws" ]; then
+        focused_ws="$(hyprctl activewindow -j 2>/dev/null | jq -r '.workspace.id // empty' 2>/dev/null || echo "")"
+    fi
+
+    # Construye el markup (igual formato que tu script original)
+    markup="(box :class \"works\" :orientation \"h\" :valign \"center\" :spacing 30 :space-evenly \"false\""
+
+    for ws in "${workspaces[@]}"; do
+        state="unoccupied"
+
+        # Extraemos el objeto JSON de ese workspace (si existe)
+        # Comparamos como string por seguridad (id puede ser number)
+        ws_json="$(echo "$ws_info" | jq -c --arg ws "$ws" '.[] | select((.id|tostring) == $ws) // {}' 2>/dev/null || echo "{}")"
+
+        # Contamos ventanas de forma robusta
+        num_nodes="$(printf '%s' "$ws_json" | count_windows_in_ws_json)"
+        num_nodes="${num_nodes:-0}"
+
+        if [ -n "$focused_ws" ] && [ "$ws" = "$focused_ws" ]; then
+            state="focused"
+        elif [ "$num_nodes" -gt 0 ]; then
+            state="occupied"
+        fi
+
+        # Define el icono según el estado
+        if [ "$state" = "unoccupied" ]; then
+            icon=""
+        else
+            icon=""
+        fi
+
+        # Agrega el botón para este workspace (onclick cambia workspace)
+        markup+=" (button :onclick \"hyprctl dispatch workspace $ws\" :class \"w$ws $state\" \"$icon\")"
+    done
+
+    markup+=")"
+    # Imprimimos con newline para que Eww reciba la actualización correctamente
+    printf '%s\n' "$markup"
+}
+
+# Emitir estado inicial
+update_workspaces
+
+# Suscribirse a eventos de Hyprland y actualizar cuando cambien workspaces/ventanas.
+# Hyprctl emite JSON por línea; filtramos por type workspace/window y actualizamos.
+hyprctl events -j 2>/dev/null | while read -r line; do
+    # ignorar líneas vacías
+    [ -z "${line// /}" ] && continue
+
+    # extraer tipo de evento (si no es JSON válido, saltamos)
+    evt_type="$(printf '%s' "$line" | jq -r '.type // empty' 2>/dev/null || echo "")"
+    case "$evt_type" in
+        workspace|window)
+            update_workspaces
+            ;;
+        *)
+            # opcional: puedes descomentar la siguiente línea para depurar
+            # printf '# event ignored: %s\n' "$evt_type" >&2
+            ;;
+    esac
+done

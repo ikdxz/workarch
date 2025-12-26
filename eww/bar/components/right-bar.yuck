@@ -1,0 +1,46 @@
+;; Widgets
+
+(include "./bar/widgets/control-center.yuck")
+
+
+;; Variables
+
+(defpoll date-bar :interval "10s" "date +'%d %b %Y' | tr -d '.'")
+(defpoll time :interval "60s" "date +'%H:%M' | awk -F: '{h=$1%12; if(h==0) h=12; printf \"%02d:%s %s\", h, $2, ($1<12?\"AM\":\"PM\")}'")
+
+
+
+
+
+;; Bar
+
+(defwidget right-bar []
+  (box :class "date-bar"
+    :orientation "h"
+    :space-evenly "false"
+    :halign "end"
+    :valign "center"
+    (eventbox :cursor "hand2" 
+      (button :class "iconos" :tooltip "WiFi"
+        (image :path "/home/kelly/Downloads/Brave/wifi.svg" :image-width 18)
+      )
+    )
+
+    (eventbox :cursor "hand2"
+      (button :class "bluetooth" :onclick "blueman-manager &" :tooltip "Bluetooth" "󰂯")
+    )
+
+    (eventbox :cursor "hand2"
+      (button :class "iconos" :onclick "rofi -show drun -theme ~/.local/share/rofi/themes/spotlight.rasi &" "")
+    )
+
+    (eventbox :cursor "hand2"
+      (button :class "iconos" :onclick "eww -c $HOME/.config/eww open --toggle control_center"
+        (image :path "/home/kelly/Downloads/Brave/toggle.svg" :image-width 19)
+      )
+    )
+    
+    (label :class "date-right-bar" :text time)
+    (button :class "date-right-bar" :onclick "notion-calendar-electron &" date-bar)
+  )
+)

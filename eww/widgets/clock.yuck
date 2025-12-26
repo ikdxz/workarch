@@ -1,0 +1,38 @@
+;; Variables
+
+(defpoll hour :interval "10s" "date +'%H:%M'")
+(defpoll date :interval "1m" "date +'%A, %d %B %Y'")
+
+
+
+;; Widget
+
+(defwidget clock []
+  (box :orientation "v"
+    :halign "center"
+    :valign "center"
+    :class "prueba"
+    :spacing 0
+    :space-evenly false
+    (label :class "clock" :text hour)
+    (label :class "date" :text date)
+  )
+)
+
+
+;; Window
+
+(defwindow clock :hexpand false :vexpand false
+  :geometry (geometry :x "0%"
+                      :y "120px"
+                      :width "100%"
+                      :height "60px"
+                      :anchor "top center")
+  :layer "top"
+  :stacking "bg"
+  :windowtype "dock"
+  :monitor 0
+  :decorated false
+  :wm-ignore true
+  (clock)
+)

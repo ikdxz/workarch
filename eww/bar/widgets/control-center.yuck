@@ -1,0 +1,172 @@
+;; Variables
+
+  ;; Music Info
+
+  (deflisten cover "scripts/music/musicCover")
+  (deflisten titleInfo "scripts/music/musicTitle")
+  (deflisten artistInfo "scripts/music/musicArtist")
+  (deflisten playerImage "scripts/music/playerImage")
+
+
+
+  ;; System Info
+
+  (defpoll brightness :interval "1s" "scripts/brightness")
+  (deflisten network "scripts/network")
+  (defpoll volume :interval "1s" "scripts/volume")
+
+
+;; Control Panel
+
+(defwidget control_center []
+  (box 
+    :orientation "v"
+    :class "panel"
+    :valign "start"
+
+    (box :orientation "v" :valign "start" :vexpand "false"  :space-evenly "true"
+       (box
+         :orientation "h" :class "first" :vexpand "false"
+         (box :orientation "v" :class "firstI" :hexpand "false" :vexpand "false" :spacing 20
+
+              (eventbox :cursor "hand2"
+                (box :class "burbuja" :orientation "horizontal" :halign "fill" :space-evenly "false" :vexpand "false"
+                
+                  (box :valign "center" :halign "start" :vexpand "false"
+                    (image :class "active" :path "/home/kelly/Downloads/Brave/wifin.svg"  :image-width "25")
+                  )
+                  (box :orientation "v" :halign "start" :valign "center" :class "txt"
+                    (label :class "cfgTitle" :halign "start" :text "Wi-Fi")
+                    (label :class "cfgTxt" :halign "start" :text network)
+                  )
+                )
+              )
+
+              (box :class "" :orientation "horizontal" :halign "center" :space-evenly "false" :spacing "20"
+
+                (eventbox :cursor "hand2"   
+                  (button :onclick "eww -c $HOME/.config/eww open --toggle control_center && blueman-manager &" :valign "center" :halign "start"
+                    (image :class "activexl" :path "/home/kelly/Downloads/Brave/bluetooth.svg" :image-width "64")
+                  )
+                )
+                (eventbox :cursor "hand2"
+                  (box :valign "center" :halign "start"
+                    (image :class "activexl" :path "/home/kelly/Downloads/Brave/airdrop.svg" :image-width "64")
+                  )
+                )
+              )
+
+              (eventbox :cursor "hand2"
+                (box :class "burbuja" :orientation "horizontal" :halign "fill" :space-evenly "false" :vexpand "false"
+                  (box :valign "center" :halign "start" :vexpand "false"
+                    (image :class "active" :path "/home/kelly/Downloads/Brave/moon.svg" :image-width "28")
+                  )
+                  (box :orientation "v" :halign "start" :valign "center" :class "txt"
+                    (label :class "cfgTitle" :halign "start" :text "Focus")
+                    
+                  )
+                )
+              )
+
+            )
+         
+          (box :orientation "v" :class "fisrtD" :hexpand "false" :space-evenly "false" :spacing 20
+
+            (box :class "burbuja musica" :valign "fill" :space-evenly "false" :orientation "v"
+              (image :class "musicCovert" :halign "start" :valign "center" :path cover :image-width "70")
+              (eventbox :cursor "hand2"
+                (scale :class "music-scale" :width 10 :hexpand "true" :value brightness :max 100 :min 0 :onchange "xrandr --output DP-1 --gamma 1.05:0.95:0.85 --brightness $(echo \"{} / 100\" | bc -l)")
+              )
+              (box :hexpand "false" :orientation "v" 
+                (label :halign "start" :class "musicTitle" :wrap "true" :text titleInfo)
+                (label :halign "start" :class "musicArtist" :wrap "true" :text artistInfo)
+              )
+
+            (box :class "media" :halign "center" :valign "center" :spacing 18 
+              
+              (eventbox :cursor "hand2"
+                (button :class "icon-button" :onclick "playerctl previous"
+                  (image :path "/home/kelly/Downloads/Brave/previous.svg" :onclick "playerctl previous" :image-width 23)
+                )
+              )
+
+              (eventbox :cursor "hand2"
+                (button :class "icon-button" :onclick "playerctl play-pause"
+                  (image :path playerImage :image-width 35)
+                )
+              )
+              (eventbox :cursor "hand2"
+                (button :class "icon-button" :onclick "playerctl next"
+                  (image :path "/home/kelly/Downloads/Brave/next.svg" :onclick "playerctl previous" :image-width 23)
+                )
+              ) 
+            
+            )
+
+            )
+            
+            (box :orientation "h" :spacing 20
+              (eventbox :cursor "hand2"
+                (box :orientation "v" :class "inactivexl" :vexpand "true" :valign "center"
+                  (image :valign "end"  :path "/home/kelly/Downloads/Brave/sun.svg" :image-width "64")
+                )
+              )
+              (eventbox :cursor "hand2"
+                (box :orientation "v" :class "inactivexl" :valign "center"
+                  (image :valign "end" :path "/home/kelly/Downloads/Brave/cast.svg" :image-width "64")
+                )
+              )
+
+            )
+          )
+       )
+
+       (box :class "second" :space-evenly "false" :orientation "v" :spacing 20 :valign "start" :hexpand "false" :vexpand "false"
+         (box :class "cfg" :orientation "v" 
+            (label :class "title" :halign "start" :text "Display")
+            (box :orientation "h" :space-evenly "false" :spacing 10
+              (image :halign "end" :path "/home/kelly/Downloads/Brave/sun-low.svg" :image-width "22")
+              (scale :class "scale" :hexpand "true" :value brightness :max 100 :min 0 :onchange "xrandr --output DP-1 --gamma 1.05:0.95:0.85 --brightness $(echo \"{} / 100\" | bc -l)")
+              (image :halign "end" :path "/home/kelly/Downloads/Brave/sun-w.svg" :image-width "22")
+            )
+         )
+
+         (box :class "cfg" :orientation "v"
+            (label :class "title" :halign "start" :text "Sound")
+            (box :orientation "h" :space-evenly "false" :spacing 10
+              (box :orientation "h" :space-evenly "false" :spacing 10 :hexpand "true"
+                
+          (button :class "icon-button" :onclick "pactl set-sink-volume @DEFAULT_SINK@ 0%"
+            (image :path "/home/kelly/.local/share/icons/WhiteSur/status/32/audio-volume-muted.svg" :image-width 28 :image-height 28)
+          )
+
+                (scale :class "scale" :hexpand "true" :value volume :max 100 :min 0 :onchange "pactl set-sink-volume @DEFAULT_SINK@ {}%")
+                (image :halign "start" :path "/home/kelly/.local/share/icons/WhiteSur/status/32/audio-volume-high.svg" :image-width "28")
+              )
+              (eventbox :cursor "hand2"
+                (image :class "img1" :vexpand "false" :halign "center" :valign "center" :path "/home/kelly/Downloads/Brave/airdrop.svg" :image-width "20")
+              )
+            )
+         )
+        )
+
+       (box :class "third" :space-evenly "false" :orientation "v" :valign "start" :vexpand "false"
+       )
+   ) 
+  )
+
+)
+
+
+
+(defwindow control_center :hexpand false :vexpand false
+  :geometry (geometry :x "0px"
+                      :y "20px"
+                      :width "450px"
+                      :height "450px"
+                      :anchor "top right")
+  :monitor 0
+  :decorated false
+  :wm-ignore false
+  (control_center)
+)

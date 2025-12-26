@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+workspaces=(1 2 3 4 5 6 7 8 9)
+
+count_windows_in_ws_json() {
+  local json="$1"
+  if [ -z "$json" ] || [ "$json" = "{}" ]; then
+    printf '0'
+    return
+  fi
+  local n
+  n="$(printf '%s' "$json" | jq -r 'if has("windows") then (.windows|length) elif has("clients") then (.clients|length) elif has("window_count") then .window_count else 0 end' 2>/dev/null)"
+  n="$(printf '%s' "$n" | tr -d '\r\n' | sed -n 's/^[[:space:]]*\([0-9]\+\).*/\1/p')"
+  n="${n:-0}"
+  printf '%s' "$n"
+}
+
+update_workspaces() {
+  local ws_info focused_ws markup ws ws_json num_nodes ws_id state icon
+  ws_info="$(hyprctl workspaces -j 2>/dev/null || echo '[]')"
+  focused_ws="$(printf '%s' "$ws_info" | jq -r 'map(select(.focused==true or .active==true or .visible==true)) | .[0].id // empty' 2>/dev/null || echo "")"
+  if [ -z "$focused_ws" ]; then
+    focused_ws="$(hyprctl activewindow -j 2>/dev/null | jq -r '.workspace.id // empty' 2>/dev/null || echo "")"
+  fi
+
+  markup='(box :class "works" :orientation "h" :valign "center" :spacing 30 :space-evenly "false"'
+  for ws in "${workspaces[@]}"; do
+    state="unoccupied"
+    icon=""
+    ws_json="$(printf '%s' "$ws_info" | jq -c --arg ws "$ws" '[.[] | select((.id|tostring) == $ws or (.name? | tostring | startswith($ws)))] | .[0] // {}' 2>/dev/null || echo "{}")"
+    num_nodes="$(count_windows_in_ws_json "$ws_json")"
+    num_nodes="${num_nodes:-0}"
+    ws_id="$(printf '%s' "$ws_json" | jq -r '.id // empty' 2>/dev/null || echo "")"
+    [ -z "$ws_id" ] && ws_id="$ws"
+    if [ -n "$focused_ws" ] && [ "$ws" = "$focused_ws" ]; then
+      state="focused"
+      icon=""
+    elif [ "$num_nodes" -gt 0 ] 2>/dev/null; then
+      state="occupied"
+      icon=""
+    fi
+    markup+=" (button :onclick \"hyprctl dispatch workspace $ws_id\" :class \"w$ws $state\" \"$icon\")"
+  done
+  markup+=")"
+  printf '%s\n' "$markup"
+}
+
+# Inicialización
+update_workspaces
+
+# Suscribirse a eventos y actualizar en stdout cada vez
+hyprctl events -j 2>/dev/null | while read -r line; do
+  [ -z "${line// /}" ] && continue
+  evt_type="$(printf '%s' "$line" | jq -r '.type // empty' 2>/dev/null || echo "")"
+  case "$evt_type" in
+    workspace|window|activewindow)
+      update_workspaces
+      ;;
+    *)
+      ;;
+  esac
+done

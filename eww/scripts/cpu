@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Esperar un instante para obtener una medición más precisa
+cpu_usage=$(grep 'cpu ' /proc/stat | awk '{idle=$5; total=$2+$3+$4+$5+$6+$7+$8} {print idle, total}')
+sleep 1
+cpu_usage_new=$(grep 'cpu ' /proc/stat | awk '{idle=$5; total=$2+$3+$4+$5+$6+$7+$8} {print idle, total}')
+
+# Cálculo del porcentaje de uso de CPU
+idle1=$(echo $cpu_usage | awk '{print $1}')
+total1=$(echo $cpu_usage | awk '{print $2}')
+idle2=$(echo $cpu_usage_new | awk '{print $1}')
+total2=$(echo $cpu_usage_new | awk '{print $2}')
+
+idle_diff=$((idle2 - idle1))
+total_diff=$((total2 - total1))
+cpu_percentage=$(( (100 * (total_diff - idle_diff)) / total_diff ))
+
+# Mostrar el resultado
+echo "$cpu_percentage"

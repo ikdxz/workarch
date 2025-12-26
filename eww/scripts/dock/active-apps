@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# Produce un JSON {"appclass":true, ...} con las WM_CLASS de las ventanas visibles
+
+declare -A apps
+
+# Recorre los ids de ventana listados por wmctrl
+while read -r winid; do
+  # Obtén WM_CLASS y toma la última cadena (habitualmente es la clase "clase" o "instance")
+  cls=$(xprop -id "$winid" WM_CLASS 2>/dev/null \
+        | sed -n 's/.*= //p' \
+        | awk -F', ' '{gsub(/"/,""); print tolower($NF)}')
+
+  # Si no salió nada intenta sacar la primera parte por si cambia el formato
+  if [ -z "$cls" ]; then
+    cls=$(xprop -id "$winid" WM_CLASS 2>/dev/null \
+          | sed -n 's/.*= //p' \
+          | awk -F', ' '{gsub(/"/,""); print tolower($1)}')
+  fi
+
+  [ -n "$cls" ] && apps["$cls"]=1
+done < <(wmctrl -l | awk '{print $1}')
+
+# Construye JSON simple
+printf '{'
+first=1
+for k in "${!apps[@]}"; do
+  if [ "$first" -eq 1 ]; then first=0; else printf ','; fi
+  # Escape de comillas por seguridad
+  esc=$(printf '%s' "$k" | sed 's/"/\\"/g')
+  printf '"%s":true' "$esc"
+done
+printf '}\n'

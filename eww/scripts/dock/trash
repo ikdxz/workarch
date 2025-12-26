@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+trash_dir="/home/$USER/.local/share/Trash/files"
+last_count=-1
+
+# Función que imprime solo UNA línea: la ruta correcta
+print_trash_icon() {
+    shopt -s nullglob
+    files=("$trash_dir"/*)
+    count=${#files[@]}
+    
+    # Solo imprimimos si el conteo cambió
+    if [ "$count" -ne "$last_count" ]; then
+        if [ "$count" -gt 0 ]; then
+            printf "%s\n" "/home/$USER/Downloads/Brave/trashf.png"
+        else
+            printf "%s\n" "/home/kelly/.local/share/icons/WhiteSur/apps/scalable/trash.svg"
+        fi
+        last_count=$count
+    fi
+}
+
+print_trash_icon

@@ -1,0 +1,338 @@
+;; variables
+(deflisten user "whoami")
+(defpoll app :interval "2s" "scripts/app")
+
+
+(defvar eww "eww -c $HOME/.config/eww")
+
+
+
+;; Bar
+
+(defwidget left-bar []
+  (box :orientation "h"
+    :space-evenly false
+    :halign "start"
+    :class "center_modules"
+    (eventbox :cursor "hand2"
+      (button :class "logo-left-bar" :onclick "eww -c $HOME/.config/eww open --toggle mac && ${eww} update apple-toggle=true" "")
+    )
+    (eventbox :cursor "hand2"
+      (button :class "text-left-bar finder" :halign "start" "${app}")
+    )
+    (eventbox :cursor "hand2"
+      (button :class "text-left-bar" "File")
+    )
+    (eventbox :cursor "hand2"
+      (button :class "text-left-bar" :onclick "eww -c $HOME/.config/eww open --toggle mac_edit && ${eww} update apple-toggle=true" "Edit")
+    )
+    (eventbox :cursor "hand2"
+      (button :class "text-left-bar" "View")
+    )
+    (eventbox :cursor "hand2"
+      (button :class "text-left-bar" "Tools")
+    )
+    
+    
+  ))
+
+
+
+;; MacOS alike menu
+
+
+(defwidget menu-mac []
+  
+  (box :orientation "v"
+    :halign "start"
+    :space-evenly false
+    :spacing 20
+    :class "menu-mac"
+    
+    (box :class "about" 
+      (eventbox :cursor "hand2"
+        (button
+        :class "element-menu"
+        :onclick "kitty --directory ~ --hold neofetch &"
+          (box :orientation "h" :spacing 0 :space-evenly "false"                                                         
+            (label :halign "start" :text "About this Mac")
+            (box :hexpand true)
+          )
+        )
+      )
+    )
+
+    
+    (box :orientation "v" :class "preferences" :spacing 10
+      (eventbox :cursor "hand2"
+        (button
+        :class "element-menu"
+        :onclick "kitty --directory ~ --hold neofetch &"
+          (box :orientation "h" :spacing 0 :space-evenly "false"                                                         
+            (label :halign "start" :text "System Preferences...")
+            (box :hexpand true)
+          )
+        )
+      )
+      (eventbox :cursor "hand2"
+        (button
+        :class "element-menu"
+        :onclick "brave --new-window 'file:///var/www/apple.html' &"
+          (box :orientation "h" :spacing 0 :space-evenly "false"                                                         
+            (label :halign "start" :text "App Store")
+            (box :hexpand true)
+          )
+        )
+      )
+    )
+
+
+    (box :orientation "v" :class "system" :spacing 10
+      (eventbox :cursor "hand2"
+        (button
+        :class "element-menu"
+        :onclick "systemctl suspend"
+          (box :orientation "h" :spacing 0 :space-evenly "false"                                                         
+            (label :halign "start" :text "Sleep")
+            (box :hexpand true)
+          )
+        )
+      )
+      (eventbox :cursor "hand2"
+        (button
+        :class "element-menu"
+        :onclick "reboot"
+          (box :orientation "h" :spacing 0 :space-evenly "false"                                                         
+            (label :halign "start" :text "Restart..")
+            (box :hexpand true)
+          )
+        )
+      )
+      (eventbox :cursor "hand2"
+        (button
+        :class "element-menu"
+        :onclick "shutdown now"
+          (box :orientation "h" :spacing 0 :space-evenly "false"                                                         
+            (label :halign "start" :text "Shut Down...")
+            (box :hexpand true)
+          )
+        )
+      )
+    )
+
+
+    (box :orientation "v" :class "block" :spacing 10
+      (eventbox :cursor "hand2"
+        (button
+        :class "element-menu"
+        :onclick "betterlockscreen -l"
+          (box :orientation "h" :spacing 0 :space-evenly "false"                                                         
+            (label :halign "start" :text "Log Screen")
+            (box :hexpand true)
+            (box :class "element-icons" :spacing 7 :halign "end"
+              (label :text "^")
+              (label :text "󰘳")
+              (label :text "A")
+            )
+          )
+        )
+      )
+      (eventbox :cursor "hand2"
+        (button
+        :class "element-menu"
+        :onclick "bspc quit"
+          (box :orientation "h" :spacing 0 :space-evenly "false"                                                         
+            (label :halign "start" :text "Log out ${user}...")
+            (box :hexpand true)
+            (box :class "element-icons" :spacing 7 :halign "end"
+              (label :text "󰘶")
+              (label :text "󰘳")
+              (label :text "Q")
+            )
+          )
+        )
+      )
+  )
+)
+)
+
+;; Finder estilo MacOS
+
+;; File menu estilo MacOS
+
+;; Edit menu estilo MacOS
+
+(defwidget menu-edit []
+  (box :orientation "v"
+    :halign "start"
+    :space-evenly false
+    :spacing 20
+    :class "menu-mac"
+    
+    (box :class "about" :orientation "v" :spacing 0
+      (eventbox :cursor "hand2"
+        (button
+        :class "element-menu"
+        :onclick "xdotool key Ctrl+z"
+          (box :orientation "h" :spacing 0                                                          
+            (label :halign "start" :text "Undo")
+            (box :hexpand true)
+            (box :class "element-icons" :spacing 7 :halign "end"
+              (label :text "󰘳")
+              (label :text "Z")
+            )
+          )
+        )
+      )
+      (eventbox :cursor "hand2"
+        (button
+        :class "element-menu"
+        :onclick "xdotool key Ctrl+z"
+          (box :orientation "h" :spacing 0                                                          
+            (label :halign "start" :text "Redo")
+            (box :hexpand true)
+            (box :class "element-icons" :spacing 7 :halign "end"
+              (label :text "󰘶")
+              (label :text "󰘳")
+              (label :text "Z")
+            )
+          )
+        )
+      )
+      (eventbox :cursor "hand2"
+        (button
+        :class "element-menu"
+        :onclick "xdotool key Ctrl+y"
+          (box :orientation "h" :spacing 0  :space-evenly "false"                                                        
+            (label :halign "start" :text "Redo everything")
+            (box :hexpand true)
+            (box :class "element-icons" :spacing 7 :halign "end"
+              (label :text "󰘳")
+              (label :text "Y")
+            )
+          )
+        )
+      )
+    )
+
+
+    (box :orientation "v" :class "" :spacing 0
+      (eventbox :cursor "hand2"
+        (button
+        :class "element-menu"
+        :onclick "xdotool key Ctrl+x"
+          (box :orientation "h" :spacing 0                                                          
+            (label :halign "start" :text "Cut")
+            (box :hexpand true)
+            (box :class "element-icons" :spacing 7 :halign "end"
+              (label :text "󰘳")
+              (label :text "X")
+            )
+          )
+        )
+      )
+      (eventbox :cursor "hand2"
+        (button
+        :class "element-menu"
+        :onclick "xdotool key Ctrl+c"
+          (box :orientation "h" :spacing 0                                                          
+            (label :halign "start" :text "Copy")
+            (box :hexpand true)
+            (box :class "element-icons" :spacing 7 :halign "end"
+              (label :text "󰘳")
+              (label :text "C")
+            )
+          )
+        )
+      )
+      (eventbox :cursor "hand2"
+        (button
+        :class "element-menu"
+        :onclick "xdotool key Ctrl+v"
+          (box :orientation "h" :spacing 0                                                          
+            (label :halign "start" :text "Paste")
+            (box :hexpand true)
+            (box :class "element-icons" :spacing 7 :halign "end"
+              (label :text "󰘳")
+              (label :text "V")
+            )
+          )
+        )
+      )
+      (eventbox :cursor "hand2"
+        (button
+        :class "element-menu"
+        :onclick "xdotool key Ctrl+Shift+k"
+          (box :orientation "h" :spacing 0                                                          
+            (label :halign "start" :text "Delete")
+            (box :hexpand true)
+            (box :class "element-icons" :spacing 7 :halign "end"
+              (label :text "󰘶")
+              (label :text "󰘳")            
+              (label :text "K")            
+            )
+          )
+        )
+      )
+      (eventbox :cursor "hand2"
+        (button
+        :class "element-menu"
+        :onclick "xdotool key Ctrl+a"
+          (box :orientation "h" :spacing 0                                                          
+            (label :halign "start" :text "Select All")
+            (box :hexpand true)
+            (box :class "element-icons" :spacing 7 :halign "end"
+              (label :text "󰘳")
+              (label :text "A")
+            )
+          )
+        )
+      )
+    )
+    
+)
+)
+
+;; Views menu estilo MacOS
+
+;; Tools menu estilo MacOS
+
+
+
+
+;; Windows
+
+
+
+
+
+;; Windows toggle MacOS
+
+(defwindow mac :hexpand false :vexpand false
+  :geometry (geometry :x "10px"
+                      :y "30px"
+                      :width "300px"
+                      :height "60px"
+                      :anchor "top left")
+  :monitor 0
+  :windowtype "dock"
+  :decorated false
+  :wm-ignore false
+  (menu-mac)
+)
+
+
+;; Ventana Edit MacOS
+
+(defwindow mac_edit :hexpand false :vexpand false
+  :geometry (geometry :x "195px"
+                      :y "30px"
+                      :width "300px"
+                      :height "60px"
+                      :anchor "top left")
+  :monitor 0
+  :windowtype "dock"
+  :decorated false
+  :wm-ignore false
+  (menu-edit)
+)

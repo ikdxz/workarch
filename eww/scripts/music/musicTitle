@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+# Intentamos obtener cualquier título; si falla, no hay reproductor
+artUrl=$(playerctl metadata --format '{{ title }}' 2>/dev/null || echo "No player")
+
+if [ "$artUrl" = "No player" ]; then
+    echo "À l'arrêt"
+    exit 0
+fi
+
+# Si hay reproductor, seguimos mostrando títulos
+playerctl metadata --format '{{ title }}' --follow 2>/dev/null |
+while IFS= read -r line; do
+    echo "$line"
+done
