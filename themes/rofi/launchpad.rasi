@@ -1,0 +1,114 @@
+/* MACOS LAUNCHPAD LIKE THEME FOR ROFI */
+/* Author: Newman Sanchez (https://github.com/newmanls) */
+
+configuration {
+    show-icons: true;
+    drun-display-format: "{icon} {name}";
+}
+
+
+* {
+    font: "SF Pro Display Semi-Bold 13";
+
+    bg0:  rgba(0, 0, 0, 0.5);
+    bg1:  #363636;
+    bg2:  rgba(0, 0, 0, 0.1);
+    bg3:  rgba(99, 135, 146, 0.2);
+    bg4:  rgba(255, 255, 255, 0.1);
+    bg5:  rgba(255, 255, 255, 0.5);
+
+    fg0:  #f5f5f5;
+    fg1:  #f5f5f580;
+    fg2: rgba(17, 138, 185, 1);
+
+    background-color: transparent;
+    text-color:       @fg0;
+    padding:          0px;
+    margin:           0px;
+    
+}
+
+window {
+  width: 100%;
+  height: 100%;
+  padding: 0px;
+  background-color: @bg0;
+}
+
+mainbox {
+  padding:  8px;
+}
+
+inputbar {
+  background-color: @bg2;
+  margin:   100px calc( 50% - 180px ) 10px calc( 50% - 180px );
+  padding:  10px 4px;
+  spacing:  5px;
+  width: 100%;
+  border:         2px;
+  border-radius:  50px;
+  border-color:   @bg3;
+
+  children: [icon-search,entry];
+}
+
+prompt {
+  enabled:  false;
+  
+  
+  
+}
+
+icon-search {
+  expand:   false;
+  filename: "/home/kelly/Downloads/Brave/search.svg";
+  padding: 0 2px 0 10px;
+  size: 1em;
+  cursor: pointer;
+}
+entry {
+  horizontal-align: 0;
+  vertical-align: 0.5;
+  placeholder:        "Search Applications";
+  placeholder-color:  @bg5;
+  font: "SF Pro Display Semi-Bold 15";
+  cursor: text;
+  cursor-color: @fg2;
+  cursor-width: 3px;
+
+  text-color:       @fg0;
+}
+
+listview {
+  margin:   48px calc( 50% - 1260px );
+  width: 10%;
+  spacing:  50px;
+  columns:  8;
+  fixed-columns: true;
+  
+}
+
+element, element-text, element-icon {
+  cursor: pointer;
+}
+
+element {
+  padding:      10px 0px;
+  spacing:      0 10px;
+
+  orientation:    vertical;
+  border-radius:  27px;
+}
+
+element selected {
+  background-color: @bg4;
+}
+
+element-icon {
+  size: 6em;
+  horizontal-align: 0.5;
+}
+
+element-text {
+  horizontal-align: 0.5;
+}
