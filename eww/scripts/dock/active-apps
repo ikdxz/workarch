@@ -1,32 +1,75 @@
-#!/usr/bin/env bash
-# Produce un JSON {"appclass":true, ...} con las WM_CLASS de las ventanas visibles
+#!/bin/env bash
+# ~/.config/eww/scripts/prueba
+# Script pensado para usarse con Eww `deflisten "scripts/prueba"`
+# Emite por stdout un JSON compacto cada vez que cambian las clases de ventana.
+# Gracias a ChatGPT por adaptarme el script, yo lo hice como defpoll consumiendo recursos para nada.
 
-declare -A apps
+# Opciones
+COALESCE_SECONDS="${COALESCE_SECONDS:-0.08}"   # agrupar eventos rápidos
+SLEEP_ON_NO_SOCKET="${SLEEP_ON_NO_SOCKET:-1}" # tiempo para reintentar socket
 
-# Recorre los ids de ventana listados por wmctrl
-while read -r winid; do
-  # Obtén WM_CLASS y toma la última cadena (habitualmente es la clase "clase" o "instance")
-  cls=$(xprop -id "$winid" WM_CLASS 2>/dev/null \
-        | sed -n 's/.*= //p' \
-        | awk -F', ' '{gsub(/"/,""); print tolower($NF)}')
+# función que devuelve JSON compacto en una sola línea (stdout)
+emit_classes() {
+  hyprctl clients 2>/dev/null \
+    | grep -E '^[[:space:]]*class:' \
+    | sed -E 's/^[[:space:]]*class:[[:space:]]*//' \
+    | sort -u \
+    | jq -Rs -c 'split("\n") | map(select(length>0)) | map({(.): true}) | add // {}'
+}
 
-  # Si no salió nada intenta sacar la primera parte por si cambia el formato
-  if [ -z "$cls" ]; then
-    cls=$(xprop -id "$winid" WM_CLASS 2>/dev/null \
-          | sed -n 's/.*= //p' \
-          | awk -F', ' '{gsub(/"/,""); print tolower($1)}')
+# localizar socket2 de Hyprland (si HYPRLAND_INSTANCE_SIGNATURE no está definido buscamos cualquiera)
+locate_socket() {
+  if [ -n "${HYPRLAND_INSTANCE_SIGNATURE:-}" ]; then
+    printf '%s' "$XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock"
+  else
+    # toma el primer socket2 que encuentre bajo $XDG_RUNTIME_DIR/hypr
+    # (silencioso si no hay ninguno)
+    printf '%s' "$(printf '%s\n' "$XDG_RUNTIME_DIR/hypr"/*/.socket2.sock 2>/dev/null | head -n1)"
+  fi
+}
+
+# dependencias mínimas: socat y jq. Si faltan, escribimos error a stderr y seguimos (Eww no debe recibir esto).
+if ! command -v jq >/dev/null 2>&1; then
+  echo "ERROR: jq no está instalado" >&2
+fi
+if ! command -v socat >/dev/null 2>&1; then
+  echo "ERROR: socat no está instalado" >&2
+fi
+
+# Emitir estado inicial (si falla emit_classes, imprimimos {} para que Eww no se quede sin nada)
+initial=$(emit_classes) || initial="{}"
+printf '%s\n' "$initial"
+
+# Bucle principal: conectar al socket, escuchar eventos y emitir JSON a stdout.
+while true; do
+  SOCKET="$(locate_socket || true)"
+
+  if [ -z "$SOCKET" ] || [ ! -e "$SOCKET" ]; then
+
+    echo "Aviso: socket2 no disponible todavía. Reintentando en ${SLEEP_ON_NO_SOCKET}s..." >&2
+    sleep "$SLEEP_ON_NO_SOCKET"
+    continue
   fi
 
-  [ -n "$cls" ] && apps["$cls"]=1
-done < <(wmctrl -l | awk '{print $1}')
+  socat -U - UNIX-CONNECT:"$SOCKET" 2>/dev/null | while IFS= read -r line; do
+    case "$line" in
+      openwindow*|closewindow*|activewindow*|windowtitlev2*)
+        # agrupar eventos próximos para evitar floods
+        sleep "$COALESCE_SECONDS"
+        if out="$(emit_classes)"; then
+          # salida limpia: **solo** JSON a stdout (una línea)
+          printf '%s\n' "$out"
+        else
+          # si falla, no imprimimos basura a stdout; escribimos diagnóstico a stderr
+          echo "emit_classes falló (hyprctl?), esperando..." >&2
+        fi
+        ;;
+      *)
+        ;;
+    esac
+  done
 
-# Construye JSON simple
-printf '{'
-first=1
-for k in "${!apps[@]}"; do
-  if [ "$first" -eq 1 ]; then first=0; else printf ','; fi
-  # Escape de comillas por seguridad
-  esc=$(printf '%s' "$k" | sed 's/"/\\"/g')
-  printf '"%s":true' "$esc"
+
+  echo "Socket cerrado / socat terminó. Reintentando conexión..." >&2
+  sleep 0.5
 done
-printf '}\n'

@@ -25,7 +25,7 @@ tooltip {
         font-weight: 700;
         font-family: "SF Pro Display";
         font-size: 120px;
-        color: rgba(255, 255, 255, 0.6);
+        color: rgba(255, 255, 255, 0.9);
 
       }
 
@@ -238,10 +238,11 @@ tooltip {
               border-radius: 50px;
             }
 
-            .musica {
+            /*.musica:hover {
+              background-color: rgb(99, 135, 146);
               min-height: 230px;
               border-radius: 37px;
-            }
+            }*/
 
             .musicCovert{
               margin: 23px 23px 10px 23px;
@@ -319,7 +320,7 @@ tooltip {
               //background-color: #648893;
               border: rgba(255, 255, 255, 0.2) solid 0.9;
               background-color: rgba(99, 135, 146, 0.2);
-              border-radius: 50px;
+              border-radius: 100px;
               padding: 20px;
             }
 
@@ -328,7 +329,7 @@ tooltip {
               border: rgba(255, 255, 255, 0.2) solid 0.9;
               background-color: rgba(99, 135, 146, 0.2);
               border-radius: 100px;
-              padding: 25px;
+              padding: 20px;
             }
             .h1 {
               font-weight: 700;
@@ -404,19 +405,19 @@ tooltip {
 
   .dock{
     background-color: rgba(62, 144, 165, 0.1);
-    border: rgba(255, 255, 255, 0.2) solid 0.9;
+    border: rgba(255, 255, 255, 0.1) solid 1;
     border-radius: 26px;
     padding: 0px 12px;
   }
+
 
   .sep {
     color: rgba(62, 144, 165, 0.4);
     font-weight: 400;
     font-size: 40px;
-    margin: 0 3px;
+    margin:  0 3px 12px 3px;
   }
 
-  .app {}
   .app:hover {
     margin-top: -20px;
     transition: margin-top 0.2s ease-in-out;
@@ -426,13 +427,14 @@ tooltip {
   .active-app {
     background-color: #ffffff;
     min-height: 4px;
+    margin-top: 3px;
     border-radius: 50px;
     min-width: 4px;
+    
   }
 
 
 
 // ----------------------------------- Dock -------------------------------------- //
-
 
 

@@ -11,7 +11,7 @@
         :orientation "h"
         :space-evenly true
     (left-bar)
-    (workspaces)
+    ;;(workspaces)
     (right-bar)
   )
 )

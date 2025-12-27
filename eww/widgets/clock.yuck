@@ -4,14 +4,12 @@
 (defpoll date :interval "1m" "date +'%A, %d %B %Y'")
 
 
-
 ;; Widget
 
 (defwidget clock []
   (box :orientation "v"
     :halign "center"
     :valign "center"
-    :class "prueba"
     :spacing 0
     :space-evenly false
     (label :class "clock" :text hour)
@@ -36,3 +34,4 @@
   :wm-ignore true
   (clock)
 )
+

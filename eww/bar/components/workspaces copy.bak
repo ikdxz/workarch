@@ -1,0 +1,10 @@
+(defpoll workspace :interval "2s" "scripts/workspaceWayland")
+
+
+
+(defwidget workspaces []
+  (box :orientation "h"
+     :halign "center"
+     :valign "center"
+     :class "workspaces"
+     (literal :content workspace)))

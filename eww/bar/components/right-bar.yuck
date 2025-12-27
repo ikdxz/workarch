@@ -41,6 +41,8 @@
     )
     
     (label :class "date-right-bar" :text time)
-    (button :class "date-right-bar" :onclick "notion-calendar-electron &" date-bar)
+    (eventbox :cursor "hand2"
+      (button :class "date-right-bar" :onclick "notion-calendar-electron &" date-bar)
+    )
   )
 )

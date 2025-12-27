@@ -24,6 +24,8 @@
     :class "panel"
     :valign "start"
 
+    (eventbox :onhoverlost "eww -c $HOME/.config/eww open --toggle control_center"
+
     (box :orientation "v" :valign "start" :vexpand "false"  :space-evenly "true"
        (box
          :orientation "h" :class "first" :vexpand "false"
@@ -44,7 +46,7 @@
 
               (box :class "" :orientation "horizontal" :halign "center" :space-evenly "false" :spacing "20"
 
-                (eventbox :cursor "hand2"   
+                (eventbox :cursor "hand2" :class "activexll" :width 50 :height 50 
                   (button :onclick "eww -c $HOME/.config/eww open --toggle control_center && blueman-manager &" :valign "center" :halign "start"
                     (image :class "activexl" :path "/home/kelly/Downloads/Brave/bluetooth.svg" :image-width "64")
                   )
@@ -71,43 +73,43 @@
             )
          
           (box :orientation "v" :class "fisrtD" :hexpand "false" :space-evenly "false" :spacing 20
+            (eventbox :class "musica"
+              (box :class "burbuja" :valign "fill" :space-evenly "false" :orientation "v"
+                (image :class "musicCovert" :halign "start" :valign "center" :path cover :image-width "70")
+                (eventbox :cursor "hand2"
+                  (scale :class "music-scale" :width 10 :hexpand "true" :value brightness :max 100 :min 0 :onchange "xrandr --output DP-1 --gamma 1.05:0.95:0.85 --brightness $(echo \"{} / 100\" | bc -l)")
+                )
+                (box :hexpand "false" :orientation "v" 
+                  (label :truncate true :halign "start" :class "musicTitle" :wrap "true" :text titleInfo)
+                  (label :halign "start" :class "musicArtist" :wrap "true" :text artistInfo)
+                )
 
-            (box :class "burbuja musica" :valign "fill" :space-evenly "false" :orientation "v"
-              (image :class "musicCovert" :halign "start" :valign "center" :path cover :image-width "70")
-              (eventbox :cursor "hand2"
-                (scale :class "music-scale" :width 10 :hexpand "true" :value brightness :max 100 :min 0 :onchange "xrandr --output DP-1 --gamma 1.05:0.95:0.85 --brightness $(echo \"{} / 100\" | bc -l)")
-              )
-              (box :hexpand "false" :orientation "v" 
-                (label :halign "start" :class "musicTitle" :wrap "true" :text titleInfo)
-                (label :halign "start" :class "musicArtist" :wrap "true" :text artistInfo)
-              )
+                (box :class "media" :halign "center" :valign "center" :spacing 18 
+                  
+                  (eventbox :cursor "hand2"
+                    (button :class "icon-button" :onclick "playerctl previous"
+                      (image :path "/home/kelly/Downloads/Brave/previous.svg" :onclick "playerctl previous" :image-width 23)
+                    )
+                  )
 
-            (box :class "media" :halign "center" :valign "center" :spacing 18 
-              
-              (eventbox :cursor "hand2"
-                (button :class "icon-button" :onclick "playerctl previous"
-                  (image :path "/home/kelly/Downloads/Brave/previous.svg" :onclick "playerctl previous" :image-width 23)
+                  (eventbox :cursor "hand2"
+                    (button :class "icon-button" :onclick "playerctl play-pause"
+                      (image :path playerImage :image-width 35)
+                    )
+                  )
+                  (eventbox :cursor "hand2"
+                    (button :class "icon-button" :onclick "playerctl next"
+                      (image :path "/home/kelly/Downloads/Brave/next.svg" :onclick "playerctl previous" :image-width 23)
+                    )
+                  ) 
+                
                 )
               )
-
-              (eventbox :cursor "hand2"
-                (button :class "icon-button" :onclick "playerctl play-pause"
-                  (image :path playerImage :image-width 35)
-                )
-              )
-              (eventbox :cursor "hand2"
-                (button :class "icon-button" :onclick "playerctl next"
-                  (image :path "/home/kelly/Downloads/Brave/next.svg" :onclick "playerctl previous" :image-width 23)
-                )
-              ) 
-            
             )
-
-            )
             
-            (box :orientation "h" :spacing 20
-              (eventbox :cursor "hand2"
-                (box :orientation "v" :class "inactivexl" :vexpand "true" :valign "center"
+            (box :orientation "h" :spacing 20 
+              (eventbox :cursor "hand2" 
+                (box :orientation "v" :class "inactivexl" :vexpand "true" :valign "center" :height 10 :width 5
                   (image :valign "end"  :path "/home/kelly/Downloads/Brave/sun.svg" :image-width "64")
                 )
               )
@@ -135,17 +137,14 @@
             (label :class "title" :halign "start" :text "Sound")
             (box :orientation "h" :space-evenly "false" :spacing 10
               (box :orientation "h" :space-evenly "false" :spacing 10 :hexpand "true"
-                
-          (button :class "icon-button" :onclick "pactl set-sink-volume @DEFAULT_SINK@ 0%"
-            (image :path "/home/kelly/.local/share/icons/WhiteSur/status/32/audio-volume-muted.svg" :image-width 28 :image-height 28)
-          )
+                (button :class "icon-button" :onclick "pactl set-sink-volume @DEFAULT_SINK@ 0%"
+                  (image :path "/home/kelly/.local/share/icons/WhiteSur/status/32/audio-volume-muted.svg" :image-width 28 :image-height 28)
+                )
 
                 (scale :class "scale" :hexpand "true" :value volume :max 100 :min 0 :onchange "pactl set-sink-volume @DEFAULT_SINK@ {}%")
                 (image :halign "start" :path "/home/kelly/.local/share/icons/WhiteSur/status/32/audio-volume-high.svg" :image-width "28")
               )
-              (eventbox :cursor "hand2"
                 (image :class "img1" :vexpand "false" :halign "center" :valign "center" :path "/home/kelly/Downloads/Brave/airdrop.svg" :image-width "20")
-              )
             )
          )
         )
@@ -155,6 +154,7 @@
    ) 
   )
 
+)
 )
 
 

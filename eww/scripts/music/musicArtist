@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
+
+
+if ! playerctl metadata --format '{{ artist }}' 2>/dev/null >/dev/null; then
+    echo ""
+    exit 0
+fi
+
+
 playerctl metadata --format '{{ artist }}' --follow 2>/dev/null |
 while IFS= read -r line; do
-  echo "$line"
+    echo "$line"
 done
