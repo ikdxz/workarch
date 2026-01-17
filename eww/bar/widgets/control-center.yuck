@@ -6,6 +6,9 @@
   (deflisten titleInfo "scripts/music/musicTitle")
   (deflisten artistInfo "scripts/music/musicArtist")
   (deflisten playerImage "scripts/music/playerImage")
+  (deflisten position "scripts/music/songPosition")
+  (deflisten duration "scripts/music/songDuration")
+  
 
 
 
@@ -16,6 +19,8 @@
   (defpoll volume :interval "1s" "scripts/volume")
 
 
+  
+
 ;; Control Panel
 
 (defwidget control_center []
@@ -23,8 +28,7 @@
     :orientation "v"
     :class "panel"
     :valign "start"
-
-    (eventbox :onhoverlost "eww -c $HOME/.config/eww open --toggle control_center"
+    (eventbox :onhoverlost "eww -c $HOME/.config/eww open --toggle control_center && eww update prueba=false"
 
     (box :orientation "v" :valign "start" :vexpand "false"  :space-evenly "true"
        (box
@@ -73,11 +77,12 @@
             )
          
           (box :orientation "v" :class "fisrtD" :hexpand "false" :space-evenly "false" :spacing 20
-            (eventbox :class "musica"
-              (box :class "burbuja" :valign "fill" :space-evenly "false" :orientation "v"
+            (eventbox :class "musica"  
+            ;;:onclick "/home/kelly/Documents/pruebas/spotify-toggle"
+              (box :class "music" :valign "fill" :space-evenly "false" :orientation "v"
                 (image :class "musicCovert" :halign "start" :valign "center" :path cover :image-width "70")
                 (eventbox :cursor "hand2"
-                  (scale :class "music-scale" :width 10 :hexpand "true" :value brightness :max 100 :min 0 :onchange "xrandr --output DP-1 --gamma 1.05:0.95:0.85 --brightness $(echo \"{} / 100\" | bc -l)")
+                  (scale :class "music-scale" :width 10 :hexpand "true" :value position :max duration :min 0 :onchange "playerctl position {}")
                 )
                 (box :hexpand "false" :orientation "v" 
                   (label :truncate true :halign "start" :class "musicTitle" :wrap "true" :text titleInfo)
@@ -88,7 +93,7 @@
                   
                   (eventbox :cursor "hand2"
                     (button :class "icon-button" :onclick "playerctl previous"
-                      (image :path "/home/kelly/Downloads/Brave/previous.svg" :onclick "playerctl previous" :image-width 23)
+                      (image :path "/home/kelly/Downloads/Brave/previous.svg" :image-width 23)
                     )
                   )
 
@@ -99,7 +104,7 @@
                   )
                   (eventbox :cursor "hand2"
                     (button :class "icon-button" :onclick "playerctl next"
-                      (image :path "/home/kelly/Downloads/Brave/next.svg" :onclick "playerctl previous" :image-width 23)
+                      (image :path "/home/kelly/Downloads/Brave/next.svg" :image-width 23)
                     )
                   ) 
                 
@@ -128,7 +133,7 @@
             (label :class "title" :halign "start" :text "Display")
             (box :orientation "h" :space-evenly "false" :spacing 10
               (image :halign "end" :path "/home/kelly/Downloads/Brave/sun-low.svg" :image-width "22")
-              (scale :class "scale" :hexpand "true" :value brightness :max 100 :min 0 :onchange "xrandr --output DP-1 --gamma 1.05:0.95:0.85 --brightness $(echo \"{} / 100\" | bc -l)")
+              (scale :class "scale" :hexpand "true" :value 100 :max 100 :min 0 :onchange "xrandr --output DP-1 --gamma 1.05:0.95:0.85 --brightness $(echo \"{} / 100\" | bc -l)")
               (image :halign "end" :path "/home/kelly/Downloads/Brave/sun-w.svg" :image-width "22")
             )
          )
@@ -144,7 +149,7 @@
                 (scale :class "scale" :hexpand "true" :value volume :max 100 :min 0 :onchange "pactl set-sink-volume @DEFAULT_SINK@ {}%")
                 (image :halign "start" :path "/home/kelly/.local/share/icons/WhiteSur/status/32/audio-volume-high.svg" :image-width "28")
               )
-                (image :class "img1" :vexpand "false" :halign "center" :valign "center" :path "/home/kelly/Downloads/Brave/airdrop.svg" :image-width "20")
+                (image :class "img1" :vexpand "false" :halign "center" :valign "center" :path "/home/kelly/Downloads/Brave/airdropm.svg" :image-width "20")
             )
          )
         )

@@ -1,0 +1,14 @@
+#!/bin/bash
+
+x=1  # Puedes empezar desde 1 o cualquier otro número
+
+while true; do
+    if (( x % 2 == 0 )); then
+        echo "adios"
+    else
+        echo "hola"
+    fi
+
+    ((x++))      # Incrementa x en 1
+    sleep 2      # Espera 2 segundos
+done

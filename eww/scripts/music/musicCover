@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-ruta_cover='/tmp'
+ruta_cover='/dev/shm'
 ruta_default_cover='/home/kelly/Downloads/Brave/img.svg'
 archivo_url="$ruta_cover/cover.url"
 symlink_cover="$ruta_cover/cover.png"

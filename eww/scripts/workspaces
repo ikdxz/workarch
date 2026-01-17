@@ -1,0 +1,52 @@
+#!/bin/sh
+
+# Función para generar el widget en una sola línea (evita el error de Eww)
+workspaces() {
+    WLIST=$(hyprctl workspaces -j)
+    ACTIVE=$(hyprctl activeworkspace -j | jq '.id')
+
+    class_for() {
+        ws=$1
+        exists=$(echo "$WLIST" | jq ".[] | select(.id == $ws)")
+        if [ "$ws" = "$ACTIVE" ]; then
+            echo "occupied focused"
+        elif [ -n "$exists" ]; then
+            echo "occupied"
+        else
+            echo "empty"
+        fi
+    }
+
+    c1=$(class_for 1); c2=$(class_for 2); c3=$(class_for 3); c4=$(class_for 4)
+    c5=$(class_for 5); c6=$(class_for 6); c7=$(class_for 7)
+
+    # Nota: Todo en una sola línea para que Eww no de error de delimitadores
+    echo "(box :class \"works\" :orientation \"h\" :halign \"center\" :valign \"center\" :space-evenly \"false\" :spacing \"4\" (eventbox :cursor \"hand2\" (button :onclick \"hyprctl dispatch workspace 1\" :class \"$c1\" \"\")) (eventbox :cursor \"hand2\" (button :onclick \"hyprctl dispatch workspace 2\" :class \"$c2\" \"󰨞\")) (eventbox :cursor \"hand2\" (button :onclick \"hyprctl dispatch workspace 3\" :class \"$c3\" \"󰖟\")) (eventbox :cursor \"hand2\" (button :onclick \"hyprctl dispatch workspace 4\" :class \"$c4\" \"\")) (eventbox :cursor \"hand2\" (button :onclick \"hyprctl dispatch workspace 5\" :class \"$c5\" \"\")) (eventbox :cursor \"hand2\" (button :onclick \"hyprctl dispatch workspace 6\" :class \"$c6\" \"\")) (eventbox :cursor \"hand2\" (button :onclick \"hyprctl dispatch workspace 7\" :class \"$c7\" \"\")))"
+}
+
+# Ejecución inicial
+workspaces
+
+# Escuchar eventos y actualizar
+handle() {
+    case $1 in
+        workspace*|focusedmon*|createwindow*|destroywindow*|movewindow*)
+            workspaces
+            ;;
+    esac
+}
+
+# Usar la ruta correcta del socket de Hyprland
+SOC_FILE="$XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock"
+
+if command -v socat >/dev/null 2>&1 && [ -e "$SOC_FILE" ]; then
+    socat -U - UNIX-CONNECT:"$SOC_FILE" | while read -r line; do
+        handle "$line"
+    done
+else
+    # Fallback si falla el socket
+    while true; do
+        sleep 2
+        workspaces
+    done
+fi

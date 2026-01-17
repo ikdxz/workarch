@@ -1,6 +1,6 @@
 ;; variables
 (deflisten user "whoami")
-(defpoll app :interval "2s" "scripts/app")
+(deflisten app "scripts/app")
 
 
 (defvar eww "eww -c $HOME/.config/eww")
@@ -54,7 +54,8 @@
             (button
             :class "element-menu"
             :onclick "kitty --directory ~ --hold neofetch &"
-              (box :orientation "h" :spacing 0 :space-evenly "false"                                                         
+              (box :orientation "h" :spacing 0 :space-evenly "false"
+                (label :class "left-icon" :text "󰌢")                                                            
                 (label :halign "start" :text "About this Mac")
                 (box :hexpand true)
               )
@@ -68,7 +69,8 @@
             (button
             :class "element-menu"
             :onclick "kitty --directory ~ --hold neofetch &"
-              (box :orientation "h" :spacing 0 :space-evenly "false"                                                         
+              (box  :orientation "h" :spacing 0 :space-evenly "false"
+                (label :class "left-icon" :text "")                                                         
                 (label :halign "start" :text "System Preferences...")
                 (box :hexpand true)
               )
@@ -78,7 +80,8 @@
             (button
             :class "element-menu"
             :onclick "brave --new-window 'file:///var/www/apple.html' &"
-              (box :orientation "h" :spacing 0 :space-evenly "false"                                                         
+              (box :orientation "h" :spacing 0 :space-evenly "false" 
+                (label :class "left-icon" :text "")                                                            
                 (label :halign "start" :text "App Store")
                 (box :hexpand true)
               )
@@ -92,7 +95,8 @@
             (button
             :class "element-menu"
             :onclick "systemctl suspend"
-              (box :orientation "h" :spacing 0 :space-evenly "false"                                                         
+              (box :orientation "h" :spacing 0 :space-evenly "false" 
+                (label :class "left-icon" :text "")                                                               
                 (label :halign "start" :text "Sleep")
                 (box :hexpand true)
               )
@@ -102,7 +106,8 @@
             (button
             :class "element-menu"
             :onclick "reboot"
-              (box :orientation "h" :spacing 0 :space-evenly "false"                                                         
+              (box :orientation "h" :spacing 0 :space-evenly "false"
+                (label :class "left-icon" :text "")                                                          
                 (label :halign "start" :text "Restart..")
                 (box :hexpand true)
               )
@@ -112,7 +117,8 @@
             (button
             :class "element-menu"
             :onclick "shutdown now"
-              (box :orientation "h" :spacing 0 :space-evenly "false"                                                         
+              (box :orientation "h" :spacing 0 :space-evenly "false"
+                (label :class "left-icon" :text "")                                                              
                 (label :halign "start" :text "Shut Down...")
                 (box :hexpand true)
               )
@@ -126,7 +132,8 @@
             (button
             :class "element-menu"
             :onclick "betterlockscreen -l"
-              (box :orientation "h" :spacing 0 :space-evenly "false"                                                         
+              (box :orientation "h" :spacing 0 :space-evenly "false"
+                (label :class "left-icon" :text "")                                                            
                 (label :halign "start" :text "Log Screen")
                 (box :hexpand true)
                 (box :class "element-icons" :spacing 7 :halign "end"
@@ -140,8 +147,9 @@
           (eventbox :cursor "hand2"
             (button
             :class "element-menu"
-            :onclick "bspc quit"
-              (box :orientation "h" :spacing 0 :space-evenly "false"                                                         
+            :onclick "hyprctl dispatch exit"
+              (box :orientation "h" :spacing 0 :space-evenly "false"  
+                (label :class "left-icon" :text "")                                                          
                 (label :halign "start" :text "Log out ${user}...")
                 (box :hexpand true)
                 (box :class "element-icons" :spacing 7 :halign "end"
@@ -313,7 +321,7 @@
 
 (defwindow mac :hexpand false :vexpand false
   :geometry (geometry :x "10px"
-                      :y "30px"
+                      :y "32px"
                       :width "300px"
                       :height "60px"
                       :anchor "top left")
@@ -329,7 +337,7 @@
 
 (defwindow mac_edit :hexpand false :vexpand false
   :geometry (geometry :x "195px"
-                      :y "30px"
+                      :y "32px"
                       :width "300px"
                       :height "60px"
                       :anchor "top left")

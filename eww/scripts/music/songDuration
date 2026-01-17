@@ -1,0 +1,8 @@
+d=$(playerctl metadata mpris:length 2>/dev/null)
+# d puede ser algo como "300000000"
+if [[ -z "$d" ]]; then
+    echo 0
+else
+    # Dividimos por 1_000_000 para obtener segundos
+    echo $((d / 1000000))
+fi

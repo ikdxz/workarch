@@ -1,12 +1,56 @@
-#!/bin/env bash
+#!/bin/bash
 
-focused=$(xdotool getwindowfocus getwindowclassname 2>/dev/null)
+LAST_NAME=""
 
-if [ -n "$focused" ]; then
-    # cortar sufijos después de - o _
-    base="${focused%%[ _-]*}"
-    # Primera letra mayúscula
-    echo "${base^}"
+get_class_name() {
+    # Obtener clase desde Hyprland
+    WINDOW_CLASS=$(hyprctl activewindow -j 2>/dev/null | jq -r '.class')
+
+    if [ "$WINDOW_CLASS" == "null" ] || [ -z "$WINDOW_CLASS" ]; then
+        echo "Finder"
+    else
+        # 1. Convertir a minúsculas para comparar fácilmente
+        LOW_CLASS=$(echo "$WINDOW_CLASS" | tr '[:upper:]' '[:lower:]')
+
+        case "$LOW_CLASS" in
+            *virtualbox*)
+                echo "VirtualBox"
+                ;;
+            *nautilus*|*thunar*|*dolphin*)
+                echo "Files"
+                ;;
+            *)
+                # Si no es un caso especial, aplicar tu limpieza original
+                CLEAN_NAME="${WINDOW_CLASS%%[-_ ]*}"
+                echo "${CLEAN_NAME^}"
+                ;;
+        esac
+    fi
+}
+
+update_output() {
+    CURRENT_NAME=$(get_class_name)
+    if [ "$CURRENT_NAME" != "$LAST_NAME" ]; then
+        echo "$CURRENT_NAME"
+        LAST_NAME="$CURRENT_NAME"
+    fi
+}
+
+# --- Resto del bucle de escucha (igual al anterior) ---
+update_output
+SOCK="$XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock"
+
+if command -v socat >/dev/null 2>&1 && [ -e "$SOCK" ]; then
+    socat -U - UNIX-CONNECT:"$SOCK" | while read -r line; do
+        case "$line" in
+            activewindow*|workspace*|closewindow*)
+                update_output
+                ;;
+        esac
+    done
 else
-    echo "Finder"
+    while true; do
+        update_output
+        sleep 1
+    done
 fi

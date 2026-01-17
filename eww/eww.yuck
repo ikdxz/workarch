@@ -4,11 +4,10 @@
   (include "./bar/top-bar.yuck")
 
   ;; Dock
-  (include "./dock/apps.yuck")
+  (include "./dock/dock.yuck")
 
   ;; Widgets
   (include "./widgets/clock.yuck")
-
 
 
 ;; Windows
