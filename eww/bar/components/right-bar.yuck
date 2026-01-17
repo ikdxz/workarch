@@ -20,30 +20,17 @@
     :space-evenly "false"
     :halign "end"
     :valign "center"
-    (eventbox :cursor "hand2" 
-      (button :class "iconos" :onclick "" :tooltip "WiFi" "")
-    )
-    
-    (eventbox :cursor "hand2"
-      (button :class "bluetooth" :onclick "blueman-manager &" :tooltip "Bluetooth" "󰂯")
-    )
-
-    (eventbox :cursor "hand2"
-      (button :class "iconos" :onclick "rofi -show drun -theme ~/.local/share/rofi/themes/spotlight.rasi &" "")
-    )
-
-    (eventbox :cursor "hand2"
-      (button :class "iconos" :onclick "eww -c $HOME/.config/eww open --toggle control_center && eww update prueba=true"
-        (box :spacing "-5" :class {prueba == true ? "hola" : "adios"} :valign "center" :halign "center"
+    (button :valign "center" :width 50 :class "icons" :onclick "" :tooltip "WiFi" "")
+    (button :width 10 :class "icons bluetooth" :onclick "blueman-manager &" :tooltip "Bluetooth" "󰂯")
+    (button :width 10 :class "icons" :onclick "rofi -show drun -theme ~/.local/share/rofi/themes/spotlight.rasi &" "")
+    (button :width 10 :class "iconos" :onclick "eww -c $HOME/.config/eww open --toggle control_center && eww update prueba=true"
+        (box :spacing "-5" :class {prueba == true ? "hola icons" : "adios icons"} :valign "center" :halign "center"
           (image :path "/home/kelly/Downloads/Brave/toggle.svg" :image-width 18)
           (label :class "noti-dot" :text "")
         )
-      )
     )
     
     (label :class "date-right-bar" :text time)
-    (eventbox :cursor "hand2"
-      (button :class "date-right-bar" :onclick "notion-calendar-electron &" date-bar)
-    )
+    (button :class "date-right-bar" :onclick "notion-calendar-electron &" date-bar)
   )
 )
