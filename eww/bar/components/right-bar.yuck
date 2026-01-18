@@ -5,8 +5,8 @@
 
 ;; Variables
 
-(defpoll date-bar :interval "5s" "date +'%d %b %Y' | tr -d '.'")
-(defpoll time :interval "60s" "date +'%H:%M' | awk -F: '{h=$1%12; if(h==0) h=12; printf \"%02d:%s %s\", h, $2, ($1<12?\"AM\":\"PM\")}'")
+(deflisten time_data :initial "{\"bar\":\"00:00 AM\", \"clock\":\"00:00\", \"date_full\":\"...\", \"date_bar\":\"...\"}"
+  "scripts/time")
 
 
 (defvar prueba false)
@@ -30,7 +30,7 @@
         )
     )
     
-    (label :class "date-right-bar" :text time)
-    (button :class "date-right-bar" :onclick "notion-calendar-electron &" date-bar)
+    (label :class "date-right-bar" :text "${time_data.bar}")
+    (button :class "date-right-bar" :onclick "notion-calendar-electron &" "${time_data.date_bar}")
   )
 )

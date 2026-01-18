@@ -1,7 +1,6 @@
 ;; Variables
 
-(defpoll hour :interval "10s" "date +'%H:%M'")
-(defpoll date :interval "1m" "date +'%A, %d %B %Y'")
+;;(deflisten time_data :initial "{\"bar\":\"00:00 AM\", \"clock\":\"00:00\"}" "scripts/time")
 
 
 ;; Widget
@@ -12,8 +11,8 @@
     :valign "center"
     :spacing 0
     :space-evenly false
-    (label :class "clock" :text hour)
-    (label :class "date" :text date)
+    (label :class "clock" :text "${time_data.clock}")
+    (label :class "date" :text "${time_data.date_full}")
   )
 )
 
