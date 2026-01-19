@@ -1,0 +1,36 @@
+;; Variables
+
+;;(deflisten time_data :initial "{\"bar\":\"00:00 AM\", \"clock\":\"00:00\"}" "scripts/time")
+
+
+;; Widget
+
+(defwidget clock []
+  (box :orientation "v"
+    :halign "center"
+    :valign "center"
+    :spacing 0
+    :space-evenly false
+    (label :class "clock" :text "${time_data.clock}")
+    (label :class "date" :text "${time_data.date_full}")
+  )
+)
+
+
+;; Window
+
+(defwindow clock :hexpand false :vexpand false
+  :geometry (geometry :x "0%"
+                      :y "120px"
+                      :width "100%"
+                      :height "60px"
+                      :anchor "top center")
+  :layer "top"
+  :stacking "bg"
+  :windowtype "dock"
+  :monitor 0
+  :decorated false
+  :wm-ignore true
+  (clock)
+)
+

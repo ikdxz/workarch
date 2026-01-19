@@ -1,0 +1,30 @@
+.dock {
+    //background-color: rgba(255, 255, 255, 0.01);
+    background-color: rgba(49, 90, 102, 0.294);
+    border: rgba(255, 255, 255, 0.1) solid 1;
+    border-radius: 26px;
+    padding: 0px 20px;
+}
+
+
+.sep {
+    color: rgba(62, 144, 165, 0.4);
+    font-weight: 400;
+    font-size: 40px;
+    margin: 0 0 12px 0;
+}
+
+.app:hover {
+    margin-top: -20px;
+    transition: all 0.2s ease;
+    padding: 0 0px;
+}
+
+.active-app {
+    background-color: #ffffff;
+    min-height: 4px;
+    margin-top: 3px;
+    border-radius: 50px;
+    min-width: 4px;
+
+}

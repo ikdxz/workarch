@@ -18,10 +18,10 @@ workspaces() {
     }
 
     c1=$(class_for 1); c2=$(class_for 2); c3=$(class_for 3); c4=$(class_for 4)
-    c5=$(class_for 5); c6=$(class_for 6); c7=$(class_for 7)
+    c5=$(class_for 5); c6=$(class_for 6); c7=$(class_for 7);c8=$(class_for 8)
 
     # Nota: Todo en una sola línea para que Eww no de error de delimitadores
-    echo "(box :class \"works\" :orientation \"h\" :halign \"center\" :valign \"center\" :space-evenly \"false\" :spacing \"4\" (eventbox :cursor \"hand2\" (button :onclick \"hyprctl dispatch workspace 1\" :class \"$c1\" \"\")) (eventbox :cursor \"hand2\" (button :onclick \"hyprctl dispatch workspace 2\" :class \"$c2\" \"󰨞\")) (eventbox :cursor \"hand2\" (button :onclick \"hyprctl dispatch workspace 3\" :class \"$c3\" \"󰖟\")) (eventbox :cursor \"hand2\" (button :onclick \"hyprctl dispatch workspace 4\" :class \"$c4\" \"\")) (eventbox :cursor \"hand2\" (button :onclick \"hyprctl dispatch workspace 5\" :class \"$c5\" \"\")) (eventbox :cursor \"hand2\" (button :onclick \"hyprctl dispatch workspace 6\" :class \"$c6\" \"\")) (eventbox :cursor \"hand2\" (button :onclick \"hyprctl dispatch workspace 7\" :class \"$c7\" \"\")))"
+    echo "(box :class \"works\" :orientation \"h\" :halign \"center\" :valign \"center\" :space-evenly \"false\" :spacing \"4\" (eventbox :cursor \"hand2\" (button :onclick \"hyprctl dispatch workspace 1\" :class \"$c1\" \"\")) (eventbox :cursor \"hand2\" (button :onclick \"hyprctl dispatch workspace 2\" :class \"$c2\" \"󰨞\")) (eventbox :cursor \"hand2\" (button :onclick \"hyprctl dispatch workspace 3\" :class \"$c3\" \"󰖟\")) (eventbox :cursor \"hand2\" (button :onclick \"hyprctl dispatch workspace 4\" :class \"$c4\" \"\")) (eventbox :cursor \"hand2\" (button :onclick \"hyprctl dispatch workspace 5\" :class \"$c5\" \"\")) (eventbox :cursor \"hand2\" (button :onclick \"hyprctl dispatch workspace 6\" :class \"$c6\" \"󱘲\")) (eventbox :cursor \"hand2\" (button :onclick \"hyprctl dispatch workspace 7\" :class \"$c7\" \"\")) (eventbox :cursor \"hand2\" (button :onclick \"hyprctl dispatch workspace 8\" :class \"$c8\" \"\")))"
 }
 
 # Ejecución inicial

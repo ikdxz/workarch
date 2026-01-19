@@ -1,0 +1,70 @@
+(defvar folder-icons "assets/icons/apps")
+(deflisten active-apps :initial "{}" :return-type json "scripts/dock/active-apps")
+(deflisten trash "scripts/dock/trash")
+
+
+(defwidget dock_app[app action active]
+  (eventbox :cursor "hand2"
+    (button
+      :class "app"
+      :onclick "${action} &"
+      :tooltip "${app}"
+      (box
+        :orientation "v"
+        :space-evenly "false"
+        :hexpand false
+        :vexpand false
+        :valign "center"
+        (image :image-width 50 :path "${folder-icons}/${app}.svg")
+        (box :halign "center"
+          :width 4
+          :height 4
+          :valign "end"
+          :class "active-app"
+          :style { active-apps[active] == true ? "opacity: 1" : "opacity: 0" }
+        )
+      )
+    )
+  )
+)
+
+(defwidget dock_layout []
+  (box
+    :class "dock"
+    :orientation "h"
+    :spacing 10
+    :hexpand false
+    :vexpand false
+    :height 75
+    (dock_app :app "Finder" :action "nautilus" :active "org.gnome.Nautilus")
+    (dock_app :app "Launchpad" :action "nohup rofi -show drun >/dev/null 2>&1 & disown" :active "")
+    (dock_app :app "Safari" :action "brave" :active "brave-browser")
+    (dock_app :app "Office" :action "onlyoffice-desktopeditors" :active "ONLYOFFICE")
+    (dock_app :app "Code" :action "code" :active "code")
+    (dock_app :app "Spotify" :action "/usr/local/bin/spotify.sh" :active "spotify")
+    (dock_app :app "Notion" :action "notion" :active "Notion")
+    (dock_app :app "Calendar" :action "notion-calendar-electron" :active "notion-calendar-electron")
+    (dock_app :app "Drive" :action "nautilus '/home/kelly/Google\ Drive/'" :active "org.gnome.Nautilus")
+    (dock_app :app "VirtualBox" :action "virtualbox" :active "VirtualBox Manager")
+    (dock_app :app "Discord" :action "discord" :active "discord")
+    (dock_app :app "Terminal" :action "kitty /home/$USER" :active "kitty")
+    (label :class "sep" :text "|" :valign "center")
+    (dock_app :app "${trash}" :action "nautilus --no-desktop --browser trash:///" :active "org.gnome.Nautilus")
+  )
+)
+
+
+(defwindow dock :hexpand false :vexpand false
+  :geometry (geometry :x "0%"
+    :y "12px"
+    :width "0%"
+    :height "60px"
+  :anchor "bottom center")
+  :stacking "fg"
+  :windowtype "dock"
+  :exclusive false
+  :focusable false
+  :monitor 0
+  :wm-ignore true
+  (dock_layout)
+)

@@ -7,9 +7,9 @@ trash_dir="$HOME/.local/share/Trash/files"
 # función que imprime la ruta correcta (una línea)
 print_icon() {
   if compgen -G "$trash_dir/*" > /dev/null; then
-    printf '%s\n' "$HOME/Downloads/Brave/trashf.png"
+    printf '%s\n' "TrashFull"
   else
-    printf '%s\n' "$HOME/.local/share/icons/WhiteSur/apps/scalable/trash.svg"
+    printf '%s\n' "Trash"
   fi
 }
 
@@ -18,7 +18,7 @@ print_icon
 
 # requiere inotifywait (inotify-tools)
 if ! command -v inotifywait >/dev/null 2>&1; then
-  echo "ERROR: inotifywait no está instalado" >&2
+  echo "ERROR: inotifywait not installed" >&2
   # salimos con el estado inicial (ya lo imprimimos)
   sleep 999999
 fi

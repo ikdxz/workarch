@@ -1,0 +1,28 @@
+$bg-glass: rgba(20, 105, 101, 0.27);
+$bg-glass-light: rgba(255, 255, 255, 0.1);
+$accent: #8de2ca;
+$text: #ffffff;
+$radius-dock: 16px;
+$radius-card: 35px;
+
+* {
+  all: unset;
+  font-family: "SF Pro Display";
+  color: $text;
+}
+
+.cal-box {
+  background-color: $bg-glass;
+  border-radius: $radius-card;
+  padding: 10px;
+}
+
+calendar {
+  color: white;
+  padding: 5px;
+}
+
+calendar:selected {
+  color: $accent;
+  font-weight: 100;
+}

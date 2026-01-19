@@ -1,0 +1,10 @@
+(deflisten workspace "scripts/workspaces")
+
+
+
+(defwidget workspaces []
+  (box :orientation "h"
+     :halign "center"
+     :valign "center"
+     :class "workspaces"
+     (literal :content workspace)))
