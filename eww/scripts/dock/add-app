@@ -1,6 +1,0 @@
-#!/bin/env bash
-
-
-echo "What app want you add?"
-read app
-

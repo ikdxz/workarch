@@ -1,3 +1,3 @@
-# My custom Wayland MacOS style enviroment
+# The code will arrive soon
 
-## Created from scratch
+Cheers :)
